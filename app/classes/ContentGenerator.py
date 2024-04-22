@@ -51,7 +51,7 @@ class ContentGenerator:
             else:
                 content_type_string = "song that rhymes"
 
-            final_prompt = f"Write a {content_type_string} with the following prompt: {prompt}."
+            final_prompt = f"Write a {content_type_string} with the following prompt: {prompt}. Include an appropriate title in bold for the content generated in the final response."
 
             """
             vertexai.init(project=project_id, credentials=credentials, location=location)
@@ -70,7 +70,7 @@ class ContentGenerator:
                 return {
                     "warnings": warnings
                 }
-            
+                        
             # Return successful response
             return {
                 "response": response_texts[0]
@@ -197,7 +197,7 @@ class ContentGenerator:
             else:
                 content_type_string = "song that rhymes"
 
-            final_prompt = f"Write a {content_type_string} about this image with the following prompt: {prompt}."
+            final_prompt = f"Write a {content_type_string} about this image with the following prompt: {prompt}. Include an appropriate title in bold for the content generated in the final response."
 
             response = self.gemini_model.generate_content([final_prompt, PIL.Image.open(temp_image_path)])
             response_texts = []
