@@ -46,10 +46,13 @@ class ContentGenerator:
             model = genai.GenerativeModel('gemini-pro-vision')
 
             # Specify in prompt if the text should be a story, poem or song
+            content_type_string = "song that rhymes"
             if content_type == "1":
                 content_type_string = "story"
             elif content_type == "2":
-                content_type_string = "poem"
+                content_type_string = "poem that rhymes"
+            elif content_type == "3":
+                content_type_string = "play (formatted with characters, stage direction, scenes act, etc. do not format as a poem)"
             else:
                 content_type_string = "song that rhymes"
 
