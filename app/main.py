@@ -21,10 +21,16 @@ content_generator = ContentGenerator()
 app = FastAPI()
 
 
-# Class that text prompt for text Generation
+# Class that provides prompt for text generation
 class TextPrompt(BaseModel):
     prompt: str = Field(description="Field for text prompt")
     content_type: str = Field(description="Field for generated text content type (story, poem or song)")
+
+# Class that provides prompt for image generation
+class ImageGenerationPrompt(BaseModel):
+    prompt: str = Field(description="Field for text prompt to generate image")
+    style: str = Field(description="Field for key generated image style")
+    orientation: str = Field(description="Field for key of generated image orientation")
 
 @app.get("/", response_class=HTMLResponse)
 async def root():
@@ -80,7 +86,7 @@ async def generate_text_content_endpoint(prompt: TextPrompt):
 POST Request to generate captions for a provided image
 Payload Type: Multipart/form-data
 Payload Keys:
-    - image:image file uploaded by user
+    - image: image file uploaded by user
 """
 @app.post("/generate-image-captions")
 async def generate_image_captions_endpoint(image: Annotated[UploadFile, Form()]):
@@ -112,12 +118,13 @@ async def generate_image_captions_endpoint(image: Annotated[UploadFile, Form()])
             "error": str(error)
         }
 
-    
 """
 POST Request to generate text for a provided image
 Payload Type: Multipart/form-data
 Payload Keys:
-    - image:image file uploaded by user
+    - image: image file uploaded by user
+    - content_type: key that inidicates type of content to be generated (story, poem, or song)
+    - prompt: text provided by user to assist in text content generation
 """
 @app.post("/generate-text-from-image")
 async def generate_text_from_image_endpoint(
@@ -128,6 +135,45 @@ async def generate_text_from_image_endpoint(
     try:
         # Get response for image captions
         response = await content_generator.generate_text_from_image(image, content_type, prompt)
+
+        # Return successful response
+        if "response" in response.keys():
+            return {
+                "response": response["response"]
+            }
+        
+        # Return warning response
+        elif "warnings" in response.keys():
+            return {
+                "warnings": response["warnings"]
+            }
+
+        # Return error response
+        else:
+            return {
+                "error": response["error"]
+            }
+
+    # Return exception error response
+    except Exception as error:
+        return {
+            "error": str(error)
+        }
+    
+"""
+POST Request to generate image for a provided text
+Payload Type: Application/JSON
+{
+    "prompt": represents text prompt to assist in generating text content,
+    "style": represents key for art style,
+    "orientation": represents key for image orientation
+}
+"""
+@app.post("/generate-image-from-text")
+async def generate_image_from_text_endpoint(prompt: ImageGenerationPrompt):
+    try:
+        # Get response for image captions
+        response = await content_generator.generate_image_from_text(prompt.prompt, prompt.style, prompt.orientation)
 
         # Return successful response
         if "response" in response.keys():
