@@ -253,6 +253,8 @@ class ContentGenerator:
                 style_text = "an acrylic painting"
             elif style.strip() == "4":
                 style_text = "a watercolor"
+            elif style.strip() == "5":
+                style_text = "a digital art piece"
             else:
                 style_text = "sketch"
 
