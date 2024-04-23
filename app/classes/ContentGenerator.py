@@ -241,31 +241,26 @@ class ContentGenerator:
             warnings = []
 
             # Define style type based on style(key)
-            style_text = ""
-            if style == "1":
+            style_text = "sketch"
+            if style.strip() == "1":
                 style_text = "real life photography"
-            if style == "2":
+            if style.strip() == "2":
                 style_text = "an oil painting"
-            elif style == "3":
+            elif style.strip() == "3":
                 style_text = "an acrylic painting"
-            elif style == "4":
+            elif style.strip() == "4":
                 style_text = "a watercolor"
-            elif style == "5":
-                style_text = "sketch"
             else:
-                style_text = "oil pastel"
+                style_text = "sketch"
 
             # Define image ratio based based on orientation (key)
-            ratio = ""
-
+            ratio = "4:3"
             # Square
             if orientation == "1":
                 ratio = "1:1"
-
             # Portrait
             elif orientation == "2": 
                 ratio = "3:4"
-
             # Landscape
             else:
                 ratio = "4:3"
