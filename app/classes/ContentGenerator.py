@@ -12,6 +12,7 @@ from dotenv import load_dotenv
 load_dotenv()
 from typing_extensions import Annotated
 from uuid_extensions import uuid7, uuid7str
+from datetime import datetime
 
 class ContentGenerator:
     def __init__(self):

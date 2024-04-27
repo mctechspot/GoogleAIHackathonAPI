@@ -1,4 +1,5 @@
 import base64
+import datetime 
 from fastapi import FastAPI, File, Form, UploadFile
 from fastapi.responses import HTMLResponse
 import google.generativeai as genai
@@ -61,25 +62,29 @@ async def generate_text_content_endpoint(prompt: TextPrompt):
         # Return successful response
         if "response" in response.keys():
             return {
-                "response": response["response"]
+                "response": response["response"],
+                "timestamp": int(datetime.datetime.now().timestamp())
             }
         
         # Return warning response
         elif "warnings" in response.keys():
             return {
-                "warnings": response["response"]
+                "warnings": response["response"],
+                "timestamp": int(datetime.datetime.now().timestamp())
             }
         
         # Return error response
         else:
             return {
-                "error": response["error"]
+                "error": response["error"],
+                "timestamp": int(datetime.datetime.now().timestamp())
             }
 
     # Return exception error response
     except Exception as error:
         return {
-            "error": str(error)
+            "error": str(error),
+            "timestamp": int(datetime.datetime.now().timestamp())
         }
 
 """
@@ -97,25 +102,29 @@ async def generate_image_captions_endpoint(image: Annotated[UploadFile, Form()])
         # Return successful response
         if "response" in response.keys():
             return {
-                "response": response["response"]
+                "response": response["response"],
+                "timestamp": int(datetime.datetime.now().timestamp())
             }
         
         # Return warning response
         elif "warnings" in response.keys():
             return {
-                "warnings": response["warnings"]
+                "warnings": response["warnings"],
+                "timestamp": int(datetime.datetime.now().timestamp())
             }
 
         # Return error response
         else:
             return {
-                "error": response["error"]
+                "error": response["error"],
+                "timestamp": int(datetime.datetime.now().timestamp())
             }
 
     # Return exception error response
     except Exception as error:
         return {
-            "error": str(error)
+            "error": str(error),
+            "timestamp": int(datetime.datetime.now().timestamp())
         }
 
 """
@@ -139,25 +148,29 @@ async def generate_text_from_image_endpoint(
         # Return successful response
         if "response" in response.keys():
             return {
-                "response": response["response"]
+                "response": response["response"],
+                "timestamp": int(datetime.datetime.now().timestamp())
             }
         
         # Return warning response
         elif "warnings" in response.keys():
             return {
-                "warnings": response["warnings"]
+                "warnings": response["warnings"],
+                "timestamp": int(datetime.datetime.now().timestamp())
             }
 
         # Return error response
         else:
             return {
-                "error": response["error"]
+                "error": response["error"],
+                "timestamp": int(datetime.datetime.now().timestamp())
             }
 
     # Return exception error response
     except Exception as error:
         return {
-            "error": str(error)
+            "error": str(error),
+            "timestamp": int(datetime.datetime.now().timestamp())
         }
     
 """
@@ -178,23 +191,27 @@ async def generate_image_from_text_endpoint(prompt: ImageGenerationPrompt):
         # Return successful response
         if "response" in response.keys():
             return {
-                "response": response["response"]
+                "response": response["response"],
+                "timestamp": int(datetime.datetime.now().timestamp())
             }
         
         # Return warning response
         elif "warnings" in response.keys():
             return {
-                "warnings": response["warnings"]
+                "warnings": response["warnings"],
+                "timestamp": int(datetime.datetime.now().timestamp())
             }
 
         # Return error response
         else:
             return {
-                "error": response["error"]
+                "error": response["error"],
+                "timestamp": int(datetime.datetime.now().timestamp())
             }
 
     # Return exception error response
     except Exception as error:
         return {
-            "error": str(error)
+            "error": str(error),
+            "timestamp": int(datetime.datetime.now().timestamp())
         }
